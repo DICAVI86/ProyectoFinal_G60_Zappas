@@ -1,0 +1,1 @@
+// Lógica de integración con servicios de pago (ej. Stripe)
