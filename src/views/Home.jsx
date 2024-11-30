@@ -82,7 +82,7 @@ function Home() {
   }, []);
 
   return (
-    <div>
+    <div className='m-5'>
       <h1>Productos</h1>
 
       {/* Filtros y búsqueda */}
@@ -131,7 +131,7 @@ function Home() {
       </Form>
 
       {/* Productos */}
-      <Row>
+      <Row className='mt-4'>
         {filteredProducts.slice(0, productsToShow).map((product) => (
           <Col sm={12} md={6} lg={4} key={product.id}>
             <CardZapa product={product} />
