@@ -1,7 +1,7 @@
 import './App.css'
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
-
+import { AuthProvider } from './context/authContext'; // Asegúrate de importar el contexto
 import Home from "./views/Home";
 import InicioSesion from "./views/InicioSesion";
 import Perfil from "./views/Perfil";
@@ -18,7 +18,8 @@ function App() {
 
   return (
     <BrowserRouter>
-     <Navegador/>
+      <AuthProvider>
+        <Navegador />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/iniciosesion" element={<InicioSesion />} />
@@ -29,6 +30,7 @@ function App() {
           <Route path="/favoritos" element={<Favoritos />} />
           <Route path="/carro" element={<Carro />} />
         </Routes>
+      </AuthProvider>
     </BrowserRouter>
   )
 }
