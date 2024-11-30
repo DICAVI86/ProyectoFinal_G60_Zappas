@@ -3,6 +3,7 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/authContext'; // Importamos el hook para el contexto
+import logoPrimary from '../assets/logo_primary.png'
 
 function Navegador() {
   const { isLoggedIn, login, logout } = useAuth(); // Usamos el hook del contexto
@@ -14,10 +15,16 @@ function Navegador() {
 
   return (
     <>
-      <Navbar bg="primary" expand="lg" data-bs-theme="dark">
+      <Navbar className="custom-navbar-bg" expand="lg" data-bs-theme="dark">
         <Container>
           {/* Logo */}
-          <Navbar.Brand as={Link} to="/">LogoHome</Navbar.Brand>
+          
+          <Navbar.Brand as={Link} to="/">
+            <img
+              src={logoPrimary}
+              alt="Logo Marca Zappas"
+            />
+          </Navbar.Brand>
 
           {/* Siempre visible el botón de hamburguesa (toggle) */}
           <Navbar.Toggle aria-controls="navbar-nav" />
