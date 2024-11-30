@@ -27,6 +27,7 @@ CREATE TABLE products (
     name VARCHAR(255) NOT NULL,       -- Nombre del producto
     description TEXT,                 -- Descripción del producto
     price DECIMAL(10, 2) NOT NULL,    -- Precio del producto
+    image_url VARCHAR(255);           -- Imagen del producto
     condition VARCHAR(50) NOT NULL,   -- Condición del producto (nuevo, usado, etc.)
     category_id INT,                  -- ID de la categoría del producto (opcional)
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,  -- Fecha de creación
