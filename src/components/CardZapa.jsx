@@ -1,5 +1,7 @@
 import React from 'react';
 import { Card, Button } from 'react-bootstrap';
+import '../App.css'
+
 
 function CardZapa({ product, addToCart }) {
   return (
@@ -12,7 +14,7 @@ function CardZapa({ product, addToCart }) {
         </Card.Subtitle>
         <Card.Text>{product.description}</Card.Text>
         <Card.Text><strong>Precio:</strong> ${product.price}</Card.Text>
-        <Button variant="primary" onClick={() => addToCart(product.id)}>
+        <Button class='custom-button' onClick={() => addToCart(product.id)}>
           Agregar al Carrito
         </Button>
       </Card.Body>

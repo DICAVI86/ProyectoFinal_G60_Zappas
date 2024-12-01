@@ -17,6 +17,7 @@ import Navegador from './components/Navegador';
 function App() {
 
   return (
+    <div className='custom-body-bg'>
     <BrowserRouter>
       <AuthProvider>
         <Navegador />
@@ -32,6 +33,7 @@ function App() {
         </Routes>
       </AuthProvider>
     </BrowserRouter>
+    </div>
   )
 }
 
