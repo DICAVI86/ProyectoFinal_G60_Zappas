@@ -2,6 +2,7 @@ import './App.css'
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { AuthProvider } from './context/authContext'; // Asegúrate de importar el contexto
+import { CartProvider } from './context/cartContext';
 import Home from "./views/Home";
 import InicioSesion from "./views/InicioSesion";
 import Perfil from "./views/Perfil";
@@ -17,8 +18,9 @@ import Navegador from './components/Navegador';
 function App() {
 
   return (
-    <div className='custom-body-bg'>
+
     <BrowserRouter>
+     <CartProvider>
       <AuthProvider>
         <Navegador />
         <Routes>
@@ -32,8 +34,9 @@ function App() {
           <Route path="/carro" element={<Carro />} />
         </Routes>
       </AuthProvider>
+      </CartProvider>
     </BrowserRouter>
-    </div>
+
   )
 }
 

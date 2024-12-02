@@ -5,9 +5,7 @@ import './index.css'
 
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
-
-      <App />
-
-  </React.StrictMode>,
+  <div className='custom-body-bg'>
+    <App />
+  </div>
 )
