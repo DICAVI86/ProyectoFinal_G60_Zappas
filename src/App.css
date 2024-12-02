@@ -1,5 +1,12 @@
+html,
+body {
+    height: 100%;
+}
+
 .custom-body-bg {
     background-color: #F2EBDC;
+    min-height: 100vh;
+    flex-direction: column;
 }
 
 .custom-navbar-bg {

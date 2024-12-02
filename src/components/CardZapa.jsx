@@ -1,9 +1,12 @@
 import React from 'react';
 import { Card, Button } from 'react-bootstrap';
-import '../App.css'
+import { Link } from 'react-router-dom'; 
+import { useCart } from '../context/cartContext';  // Usamos el hook del contexto
+import '../App.css';
 
+function CardZapa({ product }) {
+  const { addToCart } = useCart();  // Usamos la función addToCart del contexto
 
-function CardZapa({ product, addToCart }) {
   return (
     <Card className="mb-3">
       <Card.Img variant="top" src={product.image_url} />
@@ -14,9 +17,20 @@ function CardZapa({ product, addToCart }) {
         </Card.Subtitle>
         <Card.Text>{product.description}</Card.Text>
         <Card.Text><strong>Precio:</strong> ${product.price}</Card.Text>
-        <Button class='custom-button' onClick={() => addToCart(product.id)}>
-          Agregar al Carrito
-        </Button>
+        <div className="d-flex justify-content-around align-items-center">
+          <Button className="custom-button" onClick={() => addToCart(product)}>
+            Agregar al Carrito
+          </Button>
+          <Button
+            as={Link}
+            to="/detalleproducto"
+            variant="info"
+            className="ml-2"
+            state={{ product }} // Pasamos el producto a la ruta de detalle
+          >
+            Detalle
+          </Button>
+        </div>
       </Card.Body>
     </Card>
   );

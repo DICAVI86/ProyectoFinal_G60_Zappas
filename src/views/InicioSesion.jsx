@@ -22,7 +22,7 @@ function InicioSesion() {
 
     if (email === 'usuario@ejemplo.com' && password === '123456') {
       login();
-      navigate('/'); 
+      navigate('/');
     } else {
       setError('Correo electrónico o contraseña incorrectos');
     }
@@ -32,7 +32,7 @@ function InicioSesion() {
     <form className='col-10 col-sm-6 col-md-3 m-auto mt-5' onSubmit={handleSubmit}>
       <h1>Iniciar Sesión</h1>
       <hr />
-      
+
       {error && <div className="alert alert-danger">{error}</div>}
 
       <div className='form-group mt-1 '>

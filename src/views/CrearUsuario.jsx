@@ -175,9 +175,11 @@ function CrearUsuario() {
         </Form.Group>
       </Row>
 
-      <Button variant="primary" type="submit">
-        Registrar
-      </Button>
+      <Row className="d-flex justify-content-center">
+        <Button variant="primary" type="submit" size="xxl" className="w-auto">
+          Registrar
+        </Button>
+      </Row>
     </Form>
   );
 }
