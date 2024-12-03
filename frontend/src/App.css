@@ -1,0 +1,42 @@
+html,
+body {
+    height: 100%;
+}
+
+ul {
+    list-style-type: none;
+}
+
+.custom-body-bg {
+    background-color: #F2EBDC;
+    min-height: 100vh;
+    flex-direction: column;
+}
+
+.custom-navbar-bg {
+    background-color: #5944A6;
+}
+
+.custom-button {
+    background-color: #5944A6 !important;
+    color: white !important;
+    border: none !important;
+    font-size: 21px !important;
+    margin: 5px !important;
+    padding: 10px !important;
+    border-radius: 10px !important;
+}
+
+.custom-button:hover {
+    background-color: #8E79D9 !important;
+    color: white !important;
+}
+
+.custom-navbar-align {
+    display: flex !important;
+    justify-content: right !important;
+}
+
+.custom-card-item-cart {
+    border: solid
+}

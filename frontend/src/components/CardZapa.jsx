@@ -18,14 +18,15 @@ function CardZapa({ product }) {
         <Card.Text>{product.description}</Card.Text>
         <Card.Text><strong>Precio:</strong> ${product.price}</Card.Text>
         <div className="d-flex justify-content-around align-items-center">
-          <Button className="custom-button" onClick={() => addToCart(product)}>
+          <Button className="custom-button" 
+                  onClick={() => addToCart(product)}>
             Agregar al Carrito
           </Button>
           <Button
             as={Link}
             to="/detalleproducto"
             variant="info"
-            className="ml-2"
+            className="custom-button"
             state={{ product }} // Pasamos el producto a la ruta de detalle
           >
             Detalle

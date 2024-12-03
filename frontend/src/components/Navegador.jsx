@@ -23,12 +23,13 @@ function Navegador() {
   return (
     <>
       <Navbar className="custom-navbar-bg" expand="lg" data-bs-theme="dark">
-        <Container>
+        <Container className='custom-navbar-align'>
           {/* Logo */}
           <Navbar.Brand as={Link} to="/">
             <img
               src={logoPrimary}
               alt="Logo Marca Zappas"
+              
             />
           </Navbar.Brand>
 
@@ -44,13 +45,13 @@ function Navegador() {
               <Nav.Link as={Link} to={isLoggedIn ? "/carro" : "/iniciosesion"}>
                 {isLoggedIn
                   ? `Carrito de Compras (${getTotalItemsInCart()})`
-                  : "Inicia sesión para comprar"}
+                  : "Inicia Sesión"}
               </Nav.Link>
             </Nav>
             {/* Menú hamburguesa adicional */}
             <Nav>
               <Nav.Link as={Link} to={isLoggedIn ? "/perfil" : "/crearusuario"}>
-                {isLoggedIn ? "Hola, Usuario" : "Hola, Crea tu Usuario"}
+                {isLoggedIn ? "Usuario" : "Crea tu Usuario"}
               </Nav.Link>
               {/* Botón de Cerrar Sesión */}
               {isLoggedIn && (

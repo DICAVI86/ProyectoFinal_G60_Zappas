@@ -22,7 +22,7 @@ function Carro() {
           <ul>
             {cart.map((item) => (
               <li key={item.id}>
-                <div>
+                <div className='custom-card-item-cart d-flex'>
                   <img  className="m-2" 
                         src={item.image_url} 
                         alt={item.name} 
