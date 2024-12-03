@@ -15,7 +15,7 @@ function DetalleProducto() {
   };
 
   return (
-    <div className="detalle-producto">
+    <div className="detalle-producto m-4">
       <h2>Detalle del Producto</h2>
       <img src={product.image_url} alt={product.name} />
       <h3>{product.name}</h3>
@@ -24,9 +24,9 @@ function DetalleProducto() {
       <p><strong>Precio:</strong> ${product.price}</p>
       <p><strong>Fecha de creación:</strong> {new Date(product.created_at).toLocaleDateString()}</p>
       
-      <div className="d-flex justify-content-center mt-4">
+      <div className="d-flex justify-content-left mt-4">
         <button className="btn btn-secondary" onClick={handleDevolver}>
-          Devolver
+          volver
         </button>
       </div>
     </div>

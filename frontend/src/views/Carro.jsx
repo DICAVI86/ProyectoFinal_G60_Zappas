@@ -12,7 +12,7 @@ function Carro() {
   };
 
   return (
-    <div className="carro">
+    <div className="m-5 carro">
       <h2>Mi Carrito</h2>
 
       {cart.length === 0 ? (
@@ -22,8 +22,11 @@ function Carro() {
           <ul>
             {cart.map((item) => (
               <li key={item.id}>
-                <div>
-                  <img src={item.image_url} alt={item.name} style={{ width: '50px' }} />
+                <div className='custom-card-item-cart d-flex'>
+                  <img  className="m-2" 
+                        src={item.image_url} 
+                        alt={item.name} 
+                        style={{ width: '150px' }} />
                   <strong>{item.name}</strong>
                   <div>Precio: ${item.price}</div>
                   <div>
@@ -44,7 +47,9 @@ function Carro() {
                       +
                     </button>
                   </div>
-                  <Button variant="danger" onClick={() => removeFromCart(item.id)}>
+                  <Button className="m-2" 
+                          variant="danger" 
+                          onClick={() => removeFromCart(item.id)}>
                     Eliminar
                   </Button>
                 </div>
@@ -58,10 +63,10 @@ function Carro() {
             <strong>Total: ${calculateTotal()}</strong>
           </div>
           <div className="actions">
-            <Button variant="warning" onClick={clearCart}>
+            <Button className="m-2" variant="warning" onClick={clearCart}>
               Vaciar Carrito
             </Button>
-            <Button variant="success" onClick={handleProceedToCheckout}>
+            <Button className="m-2" variant="success" onClick={handleProceedToCheckout}>
               Proceder a Pagar
             </Button>
           </div>

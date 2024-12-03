@@ -7,7 +7,7 @@ import Home from "./views/Home";
 import InicioSesion from "./views/InicioSesion";
 import Perfil from "./views/Perfil";
 import CrearUsuario from "./views/CrearUsuario";
-import CrearProducto from "./views/CrearUsuario";
+import CrearProducto from "./views/CrearProducto";
 import DetalleProducto from "./views/DetalleProducto";
 import Favoritos from "./views/Favoritos";
 import Carro from "./views/Carro";

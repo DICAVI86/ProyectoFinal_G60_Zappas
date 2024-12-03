@@ -1,8 +1,15 @@
-# React + Vite
+# Proyecto Final
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## ZAPPAS
+#### Alumnos: Diego Castillo y Sebastián Villena
 
-Currently, two official plugins are available:
+Este sitio web consiste en un marketplace para la compra y venta de zapatillas usadas de coleccionistas.
+El sitio esta construido con las siguentes dependencias de programación:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- React Router
+- Vite
+- React Boostrap
+- Node
+
+
+###### última actualización: 1.12.24

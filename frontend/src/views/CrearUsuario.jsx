@@ -69,6 +69,7 @@ function CrearUsuario() {
   };
 
   return (
+    <div className='m-5'>
     <Form onSubmit={handleSubmit}>
       <h1>Crear Usuario</h1>
 
@@ -181,6 +182,7 @@ function CrearUsuario() {
         </Button>
       </Row>
     </Form>
+    </div>
   );
 }
 
