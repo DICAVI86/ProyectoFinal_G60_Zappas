@@ -40,3 +40,41 @@ ul {
 .custom-card-item-cart {
     border: solid
 }
+
+.footer {
+    height: auto;
+    background-color: #5944A6;
+    display: flex;
+    justify-content: end;
+}
+
+.heart-icon {
+    font-size: 24px;
+    color: grey;
+    cursor: pointer;
+    user-select: none;
+    transition: color 0.3s ease;
+  }
+  
+.heart-icon.active {
+    color: red;
+  }
+
+  .remove-button {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background: none;
+    border: none;
+    color: red;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.3s ease;
+  }
+  
+  .remove-button:hover {
+    color: darkred;
+  }
+  
+  
