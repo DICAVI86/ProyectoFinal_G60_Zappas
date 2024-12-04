@@ -54,7 +54,8 @@ function CrearProducto() {
             />
           </Form.Group>
   
-          <Form.Group className="mb-3" controlId="productBrand">
+          <Row>
+          <Form.Group className="mb-3" controlId="productBrand" as={Col}>
             <Form.Label>Marca</Form.Label>
             <Form.Control
               type="text"
@@ -66,7 +67,7 @@ function CrearProducto() {
             />
           </Form.Group>
   
-          <Form.Group className="mb-3" controlId="productSize">
+          <Form.Group className="mb-3" controlId="productSize" as={Col}>
             <Form.Label>Talla</Form.Label>
             <Form.Control
               type="text"
@@ -77,8 +78,10 @@ function CrearProducto() {
               required
             />
           </Form.Group>
+          </Row>
   
-          <Form.Group className="mb-3" controlId="productYear">
+          <Row>
+          <Form.Group className="mb-3" controlId="productYear" as={Col}>
             <Form.Label>Año</Form.Label>
             <Form.Control
               type="number"
@@ -90,7 +93,7 @@ function CrearProducto() {
             />
           </Form.Group>
   
-          <Form.Group className="mb-3" controlId="productCondition">
+          <Form.Group className="mb-3" controlId="productCondition" as={Col}>
             <Form.Label>Uso</Form.Label>
             <Form.Select
               name="uso"
@@ -102,6 +105,7 @@ function CrearProducto() {
               <option value="Bastante">Bastante</option>
             </Form.Select>
           </Form.Group>
+          </Row>
   
           <Form.Group className="mb-3" controlId="productPrice">
             <Form.Label>Precio</Form.Label>

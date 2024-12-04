@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { AuthProvider } from './context/authContext'; // Asegúrate de importar el contexto
 import { CartProvider } from './context/cartContext';
+import { FavoritosProvider } from "./context/favoritosContext";
 import Home from "./views/Home";
 import InicioSesion from "./views/InicioSesion";
 import Perfil from "./views/Perfil";
@@ -12,6 +13,7 @@ import DetalleProducto from "./views/DetalleProducto";
 import Favoritos from "./views/Favoritos";
 import Carro from "./views/Carro";
 import Navegador from './components/Navegador';
+import Footer from './components/Footer';
 
 
 
@@ -22,6 +24,7 @@ function App() {
     <BrowserRouter>
      <CartProvider>
       <AuthProvider>
+      <FavoritosProvider>
         <Navegador />
         <Routes>
           <Route path="/" element={<Home />} />
@@ -33,7 +36,9 @@ function App() {
           <Route path="/favoritos" element={<Favoritos />} />
           <Route path="/carro" element={<Carro />} />
         </Routes>
+        </FavoritosProvider>
       </AuthProvider>
+        <Footer />
       </CartProvider>
     </BrowserRouter>
 
