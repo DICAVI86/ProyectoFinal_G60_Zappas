@@ -1,138 +1,156 @@
 -- Crear la base de datos 'Zappas' 
-CREATE DATABASE Zappas;
+CREATE DATABASE zappas;
 
--- Conectar a la base de datos 'Zappas'
-\c Zappas;
+-- Conectar a la base de datos 'Zappas' 
+\c zappas;
 
 -- ------------------------------------------------------
 -- Creación de la tabla de usuarios
 -- ------------------------------------------------------
 
-CREATE TABLE users (
-    id SERIAL PRIMARY KEY,         -- ID único para cada usuario
-    name VARCHAR(100) NOT NULL,     -- Nombre del usuario
-    email VARCHAR(100) UNIQUE NOT NULL,  -- Correo electrónico único
-    password VARCHAR(255) NOT NULL,  -- Contraseña del usuario (debe ser cifrada)
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,  -- Fecha de creación
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP   -- Fecha de última actualización
+CREATE TABLE usuarios (
+    id SERIAL PRIMARY KEY,                 -- ID único para cada usuario
+    nombre VARCHAR(100) NOT NULL,          -- Nombre del usuario
+    apellido VARCHAR(100) NOT NULL,        -- Apellido del usuario
+    correo VARCHAR(100) UNIQUE NOT NULL,   -- Correo electrónico único
+    contrasena VARCHAR(255) NOT NULL,      -- Contraseña del usuario (debe ser cifrada)
+    direccion VARCHAR(255) NOT NULL,       -- Dirección del usuario
+    region VARCHAR(100) NOT NULL,          -- Región
+    ciudad VARCHAR(100) NOT NULL,          -- Ciudad
+    comuna VARCHAR(100) NOT NULL,          -- Comuna
+    creado_en TIMESTAMP DEFAULT CURRENT_TIMESTAMP, -- Fecha de creación
+    actualizado_en TIMESTAMP DEFAULT CURRENT_TIMESTAMP -- Fecha de última actualización
 );
 
 -- ------------------------------------------------------
 -- Creación de la tabla de productos
 -- ------------------------------------------------------
 
-CREATE TABLE products (
-    id SERIAL PRIMARY KEY,            -- ID único para cada producto
-    user_id INT NOT NULL,             -- ID del usuario que publica el producto
-    name VARCHAR(255) NOT NULL,       -- Nombre del producto
-    description TEXT,                 -- Descripción del producto
-    price DECIMAL(10, 2) NOT NULL,    -- Precio del producto
-    image_url VARCHAR(255);           -- Imagen del producto
-    condition VARCHAR(50) NOT NULL,   -- Condición del producto (nuevo, usado, etc.)
-    category_id INT,                  -- ID de la categoría del producto (opcional)
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,  -- Fecha de creación
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,  -- Fecha de última actualización
-    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,  -- Relación con usuarios
-    FOREIGN KEY (category_id) REFERENCES categories(id) ON DELETE SET NULL  -- Relación con categorías
+CREATE TABLE productos (
+    id SERIAL PRIMARY KEY,                -- ID único para cada producto
+    usuario_id INT NOT NULL,              -- ID del usuario que publica el producto
+    nombre VARCHAR(255) NOT NULL,         -- Nombre del producto
+    descripcion TEXT,                     -- Descripción del producto
+    precio DECIMAL(10, 2) NOT NULL,       -- Precio del producto
+    condicion VARCHAR(50) NOT NULL,       -- Condición del producto (nuevo, usado, etc.)
+    categoria_id INT,                     -- ID de la categoría del producto (opcional)
+    marca VARCHAR(255),                   -- Marca del producto
+    talla VARCHAR(255),                   -- Talla del producto
+    ano INT,                              -- Año del producto
+    creado_en TIMESTAMP DEFAULT CURRENT_TIMESTAMP,  -- Fecha de creación
+    actualizado_en TIMESTAMP DEFAULT CURRENT_TIMESTAMP, -- Fecha de última actualización
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id) ON DELETE CASCADE, -- Relación con usuarios
+    FOREIGN KEY (categoria_id) REFERENCES categorias(id) ON DELETE SET NULL -- Relación con categorías
 );
 
 -- ------------------------------------------------------
--- Creación de la tabla de categorías (opcional)
+-- Creación de la tabla de imágenes de productos
 -- ------------------------------------------------------
 
-CREATE TABLE categories (
-    id SERIAL PRIMARY KEY,         -- ID único para cada categoría
-    name VARCHAR(100) NOT NULL,     -- Nombre de la categoría (ej. "Deportivas", "Casuales")
-    description TEXT                -- Descripción de la categoría
+CREATE TABLE imagenes_productos (
+    id SERIAL PRIMARY KEY,                -- ID único para cada imagen del producto
+    producto_id INT NOT NULL,             -- ID del producto
+    url_imagen VARCHAR(255) NOT NULL,     -- URL de la imagen
+    FOREIGN KEY (producto_id) REFERENCES productos(id) ON DELETE CASCADE
 );
 
 -- ------------------------------------------------------
--- Creación de la tabla de consultas (inquiries)
+-- Creación de la tabla de categorías
 -- ------------------------------------------------------
 
-CREATE TABLE inquiries (
-    id SERIAL PRIMARY KEY,            -- ID único para cada consulta
-    user_id INT NOT NULL,             -- ID del usuario que hace la consulta
-    product_id INT NOT NULL,          -- ID del producto sobre el que se hace la consulta
-    question TEXT NOT NULL,           -- Pregunta del usuario
-    answer TEXT,                      -- Respuesta del vendedor (opcional inicialmente)
-    answered BOOLEAN DEFAULT FALSE,   -- Estado de la consulta (respondida o no)
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,  -- Fecha de creación
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,  -- Fecha de última actualización
-    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,  -- Relación con usuarios
-    FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE  -- Relación con productos
+CREATE TABLE categorias (
+    id SERIAL PRIMARY KEY,                 -- ID único para cada categoría
+    nombre VARCHAR(100) NOT NULL,          -- Nombre de la categoría
+    descripcion TEXT                       -- Descripción de la categoría
 );
 
 -- ------------------------------------------------------
--- Creación de la tabla de órdenes (orders)
+-- Creación de la tabla de consultas
 -- ------------------------------------------------------
 
-CREATE TABLE orders (
-    id SERIAL PRIMARY KEY,            -- ID único para cada orden
-    user_id INT NOT NULL,             -- ID del usuario que hace la compra
-    total_price DECIMAL(10, 2) NOT NULL,  -- Precio total de la orden
-    status VARCHAR(50) DEFAULT 'pending',  -- Estado de la orden (pendiente, completada, cancelada)
-    shipping_address TEXT,             -- Dirección de envío
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,  -- Fecha de creación
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,  -- Fecha de última actualización
-    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE  -- Relación con usuarios
+CREATE TABLE consultas (
+    id SERIAL PRIMARY KEY,                -- ID único para cada consulta
+    usuario_id INT NOT NULL,              -- ID del usuario que hace la consulta
+    producto_id INT NOT NULL,             -- ID del producto consultado
+    pregunta TEXT NOT NULL,               -- Pregunta del usuario
+    respuesta TEXT,                       -- Respuesta del vendedor
+    respondida BOOLEAN DEFAULT FALSE,     -- Estado de la consulta (respondida o no)
+    creado_en TIMESTAMP DEFAULT CURRENT_TIMESTAMP,  -- Fecha de creación
+    actualizado_en TIMESTAMP DEFAULT CURRENT_TIMESTAMP, -- Fecha de última actualización
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id) ON DELETE CASCADE, -- Relación con usuarios
+    FOREIGN KEY (producto_id) REFERENCES productos(id) ON DELETE CASCADE -- Relación con productos
 );
 
 -- ------------------------------------------------------
--- Creación de la tabla de detalles de la orden (order_items)
+-- Creación de la tabla de órdenes
 -- ------------------------------------------------------
 
-CREATE TABLE order_items (
-    id SERIAL PRIMARY KEY,            -- ID único para cada detalle
-    order_id INT NOT NULL,            -- ID de la orden a la que pertenece
-    product_id INT NOT NULL,          -- ID del producto comprado
-    quantity INT NOT NULL,            -- Cantidad del producto
-    price DECIMAL(10, 2) NOT NULL,    -- Precio del producto al momento de la compra
-    FOREIGN KEY (order_id) REFERENCES orders(id) ON DELETE CASCADE,  -- Relación con órdenes
-    FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE  -- Relación con productos
+CREATE TABLE ordenes (
+    id SERIAL PRIMARY KEY,                -- ID único para cada orden
+    usuario_id INT NOT NULL,              -- ID del usuario que realiza la compra
+    precio_total DECIMAL(10, 2) NOT NULL, -- Precio total de la orden
+    estado VARCHAR(50) DEFAULT 'pendiente', -- Estado de la orden
+    direccion_envio TEXT,                -- Dirección de envío
+    creado_en TIMESTAMP DEFAULT CURRENT_TIMESTAMP,  -- Fecha de creación
+    actualizado_en TIMESTAMP DEFAULT CURRENT_TIMESTAMP, -- Fecha de última actualización
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id) ON DELETE CASCADE
 );
 
 -- ------------------------------------------------------
--- Creación de la tabla de pagos (payments)
+-- Creación de la tabla de detalles de órdenes
 -- ------------------------------------------------------
 
-CREATE TABLE payments (
-    id SERIAL PRIMARY KEY,            -- ID único para cada pago
-    order_id INT NOT NULL,            -- ID de la orden asociada al pago
-    amount DECIMAL(10, 2) NOT NULL,   -- Monto total del pago
-    payment_method VARCHAR(50),       -- Método de pago (tarjeta, PayPal, etc.)
-    payment_status VARCHAR(50) DEFAULT 'pending',  -- Estado del pago (pendiente, completado, fallido)
-    payment_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,  -- Fecha del pago
-    FOREIGN KEY (order_id) REFERENCES orders(id) ON DELETE CASCADE  -- Relación con órdenes
+CREATE TABLE detalles_orden (
+    id SERIAL PRIMARY KEY,               -- ID único para cada detalle
+    orden_id INT NOT NULL,               -- ID de la orden
+    producto_id INT NOT NULL,            -- ID del producto comprado
+    cantidad INT NOT NULL,               -- Cantidad del producto
+    precio DECIMAL(10, 2) NOT NULL,      -- Precio del producto al momento de la compra
+    FOREIGN KEY (orden_id) REFERENCES ordenes(id) ON DELETE CASCADE, -- Relación con órdenes
+    FOREIGN KEY (producto_id) REFERENCES productos(id) ON DELETE CASCADE -- Relación con productos
 );
 
 -- ------------------------------------------------------
--- Creación de la tabla de direcciones de envío (shipping_addresses)
+-- Creación de la tabla de pagos
 -- ------------------------------------------------------
 
-CREATE TABLE shipping_addresses (
-    id SERIAL PRIMARY KEY,            -- ID único para cada dirección
-    user_id INT NOT NULL,             -- ID del usuario
-    address TEXT NOT NULL,            -- Dirección de envío
-    city VARCHAR(100),                -- Ciudad
-    state VARCHAR(100),               -- Estado/Provincia
-    postal_code VARCHAR(20),          -- Código postal
-    country VARCHAR(100),             -- País
-    is_default BOOLEAN DEFAULT FALSE, -- Dirección predeterminada (sí/no)
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,  -- Fecha de creación
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,  -- Fecha de última actualización
-    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE  -- Relación con usuarios
+CREATE TABLE pagos (
+    id SERIAL PRIMARY KEY,               -- ID único para cada pago
+    orden_id INT NOT NULL,               -- ID de la orden asociada
+    monto DECIMAL(10, 2) NOT NULL,       -- Monto total del pago
+    metodo_pago VARCHAR(50),             -- Método de pago
+    estado_pago VARCHAR(50) DEFAULT 'pendiente', -- Estado del pago
+    fecha_pago TIMESTAMP DEFAULT CURRENT_TIMESTAMP, -- Fecha del pago
+    FOREIGN KEY (orden_id) REFERENCES ordenes(id) ON DELETE CASCADE
 );
 
 -- ------------------------------------------------------
--- Creación de la tabla de favoritos (favorites)
+-- Creación de la tabla de direcciones de envío
 -- ------------------------------------------------------
 
-CREATE TABLE favorites (
-    id SERIAL PRIMARY KEY,            -- ID único para cada favorito
-    user_id INT NOT NULL,             -- ID del usuario que agrega el favorito
-    product_id INT NOT NULL,          -- ID del producto agregado a favoritos
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,  -- Fecha de creación
-    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,  -- Relación con usuarios
-    FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE  -- Relación con productos
+CREATE TABLE direcciones_envio (
+    id SERIAL PRIMARY KEY,               -- ID único para cada dirección
+    usuario_id INT NOT NULL,             -- ID del usuario
+    direccion TEXT NOT NULL,             -- Dirección de envío
+    ciudad VARCHAR(100),                 -- Ciudad
+    estado VARCHAR(100),                 -- Estado/Provincia
+    codigo_postal VARCHAR(20),           -- Código postal
+    pais VARCHAR(100),                   -- País
+    es_predeterminada BOOLEAN DEFAULT FALSE, -- Es predeterminada
+    creado_en TIMESTAMP DEFAULT CURRENT_TIMESTAMP,  -- Fecha de creación
+    actualizado_en TIMESTAMP DEFAULT CURRENT_TIMESTAMP, -- Fecha de actualización
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id) ON DELETE CASCADE
+);
+
+-- ------------------------------------------------------
+-- Creación de la tabla de favoritos
+-- ------------------------------------------------------
+
+CREATE TABLE favoritos (
+    id SERIAL PRIMARY KEY,               -- ID único para cada favorito
+    usuario_id INT NOT NULL,             -- ID del usuario
+    producto_id INT NOT NULL,            -- ID del producto favorito
+    creado_en TIMESTAMP DEFAULT CURRENT_TIMESTAMP, -- Fecha de creación
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id) ON DELETE CASCADE, -- Relación con usuarios
+    FOREIGN KEY (producto_id) REFERENCES productos(id) ON DELETE CASCADE -- Relación con productos
 );
