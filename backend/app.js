@@ -1,18 +1,18 @@
-// Configuración principal del servidor Express
+// app.js
+import express from 'express';
+import productRoutes from './routes/productRoutes.js'; 
+import authRoutes from './routes/authRoutes.js';
+import morgan from 'morgan';
+import cors from 'cors';
 
-const express = require('express');
-const cors = require('cors');
-const authRoutes = require('./routes/authRoutes');
-const productRoutes = require('./routes/productRoutes');
-const orderRoutes = require('./routes/orderRoutes');
 const app = express();
 
+app.use(morgan('dev'));
 app.use(cors());
-app.use(express.json());  // Para poder parsear el cuerpo de las solicitudes como JSON
+app.use(express.json());  // Para manejar JSON en las peticiones
 
-// Rutas de la API
-app.use('/api/auth', authRoutes);
-app.use('/api/products', productRoutes);
-app.use('/api/orders', orderRoutes);
+// Rutas
+app.use('/api/products', productRoutes); // Aquí estamos usando '/api/producrs' como el prefijo para las rutas de los productos
+app.use('/api/users', authRoutes); // Aquí estamos usando '/api/users' como el prefijo para las rutas de usuarios
 
-module.exports = app;
+export default app;

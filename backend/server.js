@@ -1,8 +1,9 @@
 // Configuración de arranque del servidor Express
 
-const app = require('./app');
-const PORT = 3000
+// server.js
+import app from './app.js';
+import { config } from './config/config.js';
 
-app.listen(PORT, () => {
-  console.log(`Servidor corriendo en el puerto ${PORT}`);
+app.listen(config.port, () => {
+  console.log(`Servidor corriendo en el puerto ${config.port}`);
 });

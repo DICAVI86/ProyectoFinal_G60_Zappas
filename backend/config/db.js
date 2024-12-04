@@ -1,14 +1,11 @@
-// Configuración de la conexión a PostgreSQL
+// config/db.js
 
-const { Pool } = require('pg');
-require('dotenv').config();
+import pkg from 'pg';
+const { Pool } = pkg;
+import { config } from './config.js';
 
 const pool = new Pool({
-    host: process.env.DB_HOST,
-    port: process.env.DB_PORT,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME,
-  });
+  connectionString: config.databaseUrl, // Usamos la URL de conexión desde el archivo de configuración
+});
 
-module.exports = pool;
+export default pool;
