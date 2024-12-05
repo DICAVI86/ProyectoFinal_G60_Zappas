@@ -22,40 +22,58 @@ function Carro() {
           <ul>
             {cart.map((item) => (
               <li key={item.id}>
-                <div className='custom-card-item-cart d-flex'>
-                  <img  className="m-2" 
-                        src={item.image_url} 
-                        alt={item.name} 
-                        style={{ width: '150px' }} />
-                  <strong>{item.name}</strong>
-                  <div>Precio: ${item.price}</div>
+                <div className='custom-card-item-cart'>
                   <div>
-                    <button
+                    <img  className="m-2" 
+                          src={item.image_url} 
+                          alt={item.name} 
+                          style={{ width: '200px' }} />
+                  </div>
+                  <div>
+                  <div className='m-2 justify-content-center'>
+                    <h3><strong>{item.name}</strong></h3>
+                  </div>
+
+                  <div className='m-2'
+                      style={{ height: 'auto' }}>
+                    <Button
                       onClick={() => updateQuantity(item.id, Math.max(item.quantity - 1, 1))}
                     >
                       -
-                    </button>
-                    <input
-                      type="number"
-                      value={item.quantity}
-                      onChange={(e) => updateQuantity(item.id, Math.max(parseInt(e.target.value), 1))}
-                      style={{ width: '50px' }}
-                    />
-                    <button
+                    </Button>
+                      <input
+                        type="number"
+                        value={item.quantity}
+                        onChange={(e) => updateQuantity(item.id, Math.max(parseInt(e.target.value), 1))}
+                        style={{ width: '50px', height: '40px' }}
+                      />
+                    <Button
                       onClick={() => updateQuantity(item.id, item.quantity + 1)}
                     >
                       +
-                    </button>
+                    </Button>
                   </div>
-                  <Button className="m-2" 
-                          variant="danger" 
-                          onClick={() => removeFromCart(item.id)}>
-                    Eliminar
-                  </Button>
+
+                  <div>
+                    Precio: ${item.price}
+                  </div>
+
+                  <div>
+                    Subtotal: ${item.price * item.quantity}
+                  </div>
+
+                    <Button className="m-2" 
+                            variant="danger" 
+                            onClick={() => removeFromCart(item.id)}>
+                      Eliminar
+                    </Button>
+
+
+                  </div>
+                  
+
                 </div>
-                <div>
-                  Subtotal: ${item.price * item.quantity}
-                </div>
+
               </li>
             ))}
           </ul>
