@@ -1,1 +1,1 @@
-npm i express morgan pg bcryptjs jsonwebtoken dotenv cors
+npm i express morgan pg bcryptjs jsonwebtoken dotenv cors body-parser

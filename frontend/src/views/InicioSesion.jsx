@@ -1,6 +1,8 @@
+//views/InicioSesion.jsx
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/authContext';
+import api from '../services/api';
 
 function InicioSesion() {
   const [email, setEmail] = useState('');
@@ -17,13 +19,21 @@ function InicioSesion() {
     }
   }, [isLoggedIn, navigate]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (email === 'usuario@ejemplo.com' && password === '123456') {
+    try {
+      const response = await api.post('/users/login', {
+        correo: email,
+        contrasena: password,
+      });
+
+      const token = response.data.token;
+      localStorage.setItem('token', token);
       login();
       navigate('/');
-    } else {
+    } catch (err) {
+      console.error(err);
       setError('Correo electrónico o contraseña incorrectos');
     }
   };
