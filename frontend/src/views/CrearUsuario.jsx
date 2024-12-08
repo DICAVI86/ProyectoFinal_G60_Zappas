@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Button from 'react-bootstrap/Button';
+import {Button, Container} from 'react-bootstrap';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
@@ -71,7 +71,7 @@ function CrearUsuario() {
   };
 
   return (
-    <div className='m-5'>
+    <Container className='m-5'>
       <Form onSubmit={handleSubmit}>
         <h1>Crear Usuario</h1>
         {error && <div className="alert alert-danger">{error}</div>}
@@ -187,7 +187,7 @@ function CrearUsuario() {
           Registrar
         </Button>
       </Form>
-    </div>
+    </Container>
   );
 }
 
