@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Form, Row, Col } from 'react-bootstrap';
+import { Container, Form, Row, Col } from 'react-bootstrap';
 import CardZapa from '../components/CardZapa';
 
 function Home() {
@@ -82,11 +82,11 @@ function Home() {
   }, []);
 
   return (
-    <div className='m-5'>
+    <Container className='m-5'>
       <h1>Productos</h1>
 
       {/* Filtros y búsqueda */}
-      <Form inline className="mb-3">
+      <Form className="form-inline mb-3">
         <Row>
           <Col xs="auto">
             <Form.Control
@@ -143,7 +143,7 @@ function Home() {
       {filteredProducts.length <= productsToShow && (
         <div className="text-center mt-3">No hay más productos para mostrar.</div>
       )}
-    </div>
+    </Container>
   );
 }
 

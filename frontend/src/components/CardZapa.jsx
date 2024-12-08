@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { useCart } from "../context/cartContext";
 import { FavoritosContext } from "../context/favoritosContext";
 import { useNavigate } from "react-router-dom";
+import { Container, Form, Row, Col } from 'react-bootstrap';
 
 function CardZapa({ product }) {
   const { addToCart } = useCart();
@@ -60,7 +61,7 @@ function CardZapa({ product }) {
             Agregar al carrito
           </button>
 
-          <button className="btn btn-primary m-1 custom-button" onClick={handleViewDetail}>
+          <button className="btn btn-primary m-1 custom-button" onClick={() => navigate(`/detalle/${product.id}`)}>
             Detalle
           </button>
 
