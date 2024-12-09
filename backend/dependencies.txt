@@ -1,1 +1,3 @@
-npm i express morgan pg bcryptjs jsonwebtoken dotenv cors body-parser
+npm i express morgan pg bcryptjs jsonwebtoken dotenv cors body-parser 
+npm i jest supertest --save-dev
+npm install --save-dev babel-jest @babel/core @babel/preset-env
