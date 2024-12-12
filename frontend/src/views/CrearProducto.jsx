@@ -68,7 +68,8 @@ function CrearProducto() {
             required
           />
         </Form.Group>
-        </Row>
+        
+
         <Row>
 
           <Form.Group className="mb-3" controlId="productBrand" as={Col}>
