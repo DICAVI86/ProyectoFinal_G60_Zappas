@@ -15,6 +15,8 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 
+// Hacer que la carpeta 'uploads' sea accesible públicamente
+app.use('/uploads', express.static('uploads'));
 
 // Rutas
 app.use('/api/products', productRoutes); // Aquí estamos usando '/api/products' como el prefijo para las rutas de los productos
