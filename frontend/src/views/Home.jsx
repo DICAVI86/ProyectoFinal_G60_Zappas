@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Form, Row, Col } from 'react-bootstrap';
 import CardZapa from '../components/CardZapa';
+import api from '../services/api'; // Asegúrate de que este es el archivo que contiene la configuración de axios
 
 function Home() {
   const [search, setSearch] = useState('');
@@ -12,26 +13,18 @@ function Home() {
   const [productsToShow, setProductsToShow] = useState(9);
   const [allProducts, setAllProducts] = useState([]);
 
-  // Simulación de productos (90 productos)
-  const generateProducts = () => {
-    const products = [];
-    for (let i = 1; i <= 90; i++) {
-      products.push({
-        id: i,
-        name: `Producto ${i}`,
-        description: `Descripción del producto ${i}`,
-        price: (Math.random() * (200 - 50) + 50).toFixed(2),
-        image_url: 'https://via.placeholder.com/150',
-        condition: i % 2 === 0 ? 'Nuevo' : 'Usado',
-        created_at: '2024-01-01'
-      });
-    }
-    return products;
-  };
-
-  // Crear productos para probar
+  // Cargar productos desde la API al cargar el componente
   useEffect(() => {
-    setAllProducts(generateProducts());
+    const fetchProducts = async () => {
+      try {
+        const response = await api.get('/products');
+        setAllProducts(response.data.products); // Asumiendo que la API devuelve { message, products }
+      } catch (error) {
+        console.error("Error al obtener los productos:", error);
+      }
+    };
+
+    fetchProducts();
   }, []);
 
   // Función para manejar el cambio de búsqueda
@@ -42,8 +35,6 @@ function Home() {
   // Función para manejar los filtros
   const handleFilterChange = (e) => {
     const { name, value } = e.target;
-
-    // Validación para el precio mínimo
     if (name === 'minPrice' && value < 0) return;
 
     setFilters((prevFilters) => ({
@@ -52,13 +43,16 @@ function Home() {
     }));
   };
 
-  // Filtramos los productos según la búsqueda y los filtros
+  // Filtrar productos basados en la búsqueda y los filtros
   const filteredProducts = allProducts.filter((product) => {
+    const validMinPrice = filters.minPrice && !isNaN(filters.minPrice);
+    const validMaxPrice = filters.maxPrice && !isNaN(filters.maxPrice);
+
     return (
-      product.name.toLowerCase().includes(search.toLowerCase()) &&
-      (filters.condition ? product.condition === filters.condition : true) &&
-      (filters.minPrice ? product.price >= filters.minPrice : true) &&
-      (filters.maxPrice ? product.price <= filters.maxPrice : true)
+      product.nombre.toLowerCase().includes(search.toLowerCase()) &&
+      (filters.condition ? product.condicion === filters.condition : true) &&
+      (validMinPrice ? product.precio >= Number(filters.minPrice) : true) &&
+      (validMaxPrice ? product.precio <= Number(filters.maxPrice) : true)
     );
   });
 
@@ -148,4 +142,7 @@ function Home() {
 }
 
 export default Home;
+
+
+
 
