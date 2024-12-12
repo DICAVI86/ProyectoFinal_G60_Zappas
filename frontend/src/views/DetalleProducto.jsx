@@ -71,7 +71,7 @@ function DetalleProducto() {
 
   return (
     <Container className="detalle-producto mt-4">
-      <h2 className="text-left">Detalle del Producto</h2>
+      <h2 className="text-left">Nombre Producto</h2>
       <Row className="mt-4">
         {/* Columna de la imagen */}
         <Col md={4}>
@@ -82,7 +82,7 @@ function DetalleProducto() {
 
         {/* Columna de detalles */}
         <Col md={4}>
-          <Card>
+          <Card style={{backgroundColor: '#F2EBDC', border: 'none'}}>
             <Card.Body>
               <Card.Title>{product.nombre}</Card.Title>
               <Card.Text>

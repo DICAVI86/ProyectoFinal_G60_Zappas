@@ -1,7 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { Container, Row, Col, Card, Button, Alert } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
-import api from "../services/api";
+import React from "react";
+import { Container, Row, Col, Card, Button } from "react-bootstrap";
 
 function Perfil() {
   const [userProducts, setUserProducts] = useState([]); // Inicializa como array vacío
@@ -57,7 +55,17 @@ function Perfil() {
             }}
           />
           <h3 className="mt-3">Nombre del Usuario</h3>
-          <Button variant="primary" className="mt-3" onClick={handleAddProduct}>
+          <a
+            href="#"
+            onClick={(e) => {
+              e.preventDefault();
+              handleEditInfo();
+            }}
+            style={{ color: "#007bff", textDecoration: "underline", cursor: "pointer" }}
+          >
+            Editar Información
+          </a>
+          <Button variant="primary" className="mt-3">
             Agregar Producto
           </Button>
         </Col>

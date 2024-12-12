@@ -41,6 +41,18 @@ function Navegador() {
             <Nav.Link as={Link} to="/favoritos" className="nav-link-hover">
               Favoritos
             </Nav.Link>
+
+            {/* Vender */}
+            {isLoggedIn && (
+              <Nav.Link
+                as={Link}
+                to="/crearproducto"
+                className="nav-link-hover"
+              >
+                Vende tus tillas
+              </Nav.Link>
+            )}
+
             {/* Carrito */}
             <Nav.Link
               as={Link}

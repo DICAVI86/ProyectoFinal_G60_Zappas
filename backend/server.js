@@ -6,6 +6,12 @@ import express from 'express';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+import path from 'path';
+import { fileURLToPath } from 'url';
+import express from 'express';
+
+const __filename = fileURLToPath(import.meta.url); // get the resolved path to the file
+const __dirname = path.dirname(__filename); // get the name of the directory
 
 // Middleware para servir el frontend
 app.use(express.static(path.join(__dirname, 'public')));
