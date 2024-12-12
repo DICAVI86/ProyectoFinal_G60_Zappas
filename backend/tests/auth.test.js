@@ -6,7 +6,7 @@ import pool from '../config/db.js';
 
 // Limpiar la base de datos antes de cada prueba
 beforeEach(async () => {
-  await pool.query('DELETE FROM usuarios'); // Elimina todos los usuarios
+  await pool.query('TRUNCATE TABLE usuarios RESTART IDENTITY CASCADE'); // Elimina todos los usuarios y reinicia las IDs
 });
 
 describe('Auth Routes Tests', () => {
