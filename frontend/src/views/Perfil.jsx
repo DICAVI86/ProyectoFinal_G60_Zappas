@@ -1,5 +1,6 @@
 import React from "react";
 import { Container, Row, Col, Card, Button } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 function Perfil() {
   // Simulación de datos de productos del usuario
@@ -92,7 +93,11 @@ function Perfil() {
           >
             Editar Información
           </a>
-          <Button variant="primary" className="mt-3">
+          <Button 
+            as={Link} 
+            to="/crearproducto"
+            variant="primary" 
+            className="mt-3">
             Agregar Producto
           </Button>
         </Col>
