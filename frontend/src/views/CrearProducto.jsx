@@ -40,9 +40,10 @@ function CrearProducto() {
   
     return (
       <Container className="my-5">
-        <h1 className="mb-4">Agregar Producto</h1>
+        <h1 className="mb-4">Vende tus Tillas</h1>
         <Form onSubmit={handleSubmit}>
-          <Form.Group className="mb-3" controlId="productName">
+        <Row>
+          <Form.Group className="mb-3" controlId="productName" as={Col}>
             <Form.Label>Nombre Producto</Form.Label>
             <Form.Control
               type="text"
@@ -53,7 +54,21 @@ function CrearProducto() {
               required
             />
           </Form.Group>
-  
+
+          <Form.Group className="mb-3" controlId="productName" as={Col}>
+            <Form.Label>Detalle Producto</Form.Label>
+            <Form.Control
+              as="textarea"
+              rows={3}
+              type="text"
+              placeholder="Escribe los detalles de tu producto"
+              name="nombre"
+              value={productData.nombre}
+              onChange={handleInputChange}
+              required
+            />
+          </Form.Group>
+        </Row>
           <Row>
           <Form.Group className="mb-3" controlId="productBrand" as={Col}>
             <Form.Label>Marca</Form.Label>
@@ -149,7 +164,7 @@ function CrearProducto() {
           </Form.Group>
   
           <Button variant="primary" type="submit">
-            Agregar Producto
+            Vende tus Tillas 
           </Button>
         </Form>
       </Container>
