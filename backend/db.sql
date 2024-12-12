@@ -33,35 +33,14 @@ CREATE TABLE productos (
     descripcion TEXT,                     -- Descripción del producto
     precio DECIMAL(10, 2) NOT NULL,       -- Precio del producto
     condicion VARCHAR(50) NOT NULL,       -- Condición del producto (nuevo, usado, etc.)
-    categoria_id INT,                     -- ID de la categoría del producto (opcional)
+    categoria VARCHAR(255),               -- Categoría del producto como texto
     marca VARCHAR(255),                   -- Marca del producto
     talla VARCHAR(255),                   -- Talla del producto
     ano INT,                              -- Año del producto
+    imagenes TEXT[],                      -- Array para URLs de imágenes
     creado_en TIMESTAMP DEFAULT CURRENT_TIMESTAMP,  -- Fecha de creación
     actualizado_en TIMESTAMP DEFAULT CURRENT_TIMESTAMP, -- Fecha de última actualización
-    FOREIGN KEY (usuario_id) REFERENCES usuarios(id) ON DELETE CASCADE, -- Relación con usuarios
-    FOREIGN KEY (categoria_id) REFERENCES categorias(id) ON DELETE SET NULL -- Relación con categorías
-);
-
--- ------------------------------------------------------
--- Creación de la tabla de imágenes de productos
--- ------------------------------------------------------
-
-CREATE TABLE imagenes_productos (
-    id SERIAL PRIMARY KEY,                -- ID único para cada imagen del producto
-    producto_id INT NOT NULL,             -- ID del producto
-    url_imagen VARCHAR(255) NOT NULL,     -- URL de la imagen
-    FOREIGN KEY (producto_id) REFERENCES productos(id) ON DELETE CASCADE
-);
-
--- ------------------------------------------------------
--- Creación de la tabla de categorías
--- ------------------------------------------------------
-
-CREATE TABLE categorias (
-    id SERIAL PRIMARY KEY,                 -- ID único para cada categoría
-    nombre VARCHAR(100) NOT NULL,          -- Nombre de la categoría
-    descripcion TEXT                       -- Descripción de la categoría
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id) ON DELETE CASCADE -- Relación con usuarios
 );
 
 -- ------------------------------------------------------

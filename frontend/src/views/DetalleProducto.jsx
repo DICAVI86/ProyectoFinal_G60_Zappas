@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Container, Row, Col, Button, Form, Card } from 'react-bootstrap';
+import api from '../services/api'; // Asegúrate de tener configurado tu cliente API
 
 function DetalleProducto() {
   const { id } = useParams();
@@ -10,47 +11,53 @@ function DetalleProducto() {
   const [forum, setForum] = useState([]); // Estado para el foro
   const [newQuestion, setNewQuestion] = useState(''); // Nueva pregunta
 
-  const generateProducts = () => {
-    const products = [];
-    for (let i = 1; i <= 90; i++) {
-      products.push({
-        id: i,
-        name: `Producto ${i}`,
-        description: `Descripción del producto ${i}`,
-        price: (Math.random() * (200 - 50) + 50).toFixed(2),
-        image_url: 'https://via.placeholder.com/300',
-        condition: i % 2 === 0 ? 'Nuevo' : 'Usado',
-        created_at: '2024-01-01',
-      });
-    }
-    return products;
-  };
-
+  // Obtener detalles del producto y las consultas
   useEffect(() => {
-    const productos = generateProducts();
-    const productoEncontrado = productos.find((p) => p.id === parseInt(id));
-
-    if (!productoEncontrado) {
-      setError('Producto no encontrado');
-    } else {
-      setProduct(productoEncontrado);
-    }
+    const fetchProductDetails = async () => {
+      try {
+        // Obtener detalles del producto
+        const productResponse = await api.get(`/products/${id}`);
+        console.log('Respuesta del producto:', productResponse.data); // Log de la respuesta
+        setProduct(productResponse.data); // Suponiendo que la respuesta tiene los detalles del producto
+  
+        // Obtener consultas relacionadas con el producto
+        const forumResponse = await api.get(`/consultas/${id}`);
+        console.log('Respuesta de las consultas:', forumResponse.data); // Log de las consultas
+        setForum(forumResponse.data); // Suponiendo que la respuesta tiene las consultas
+      } catch (error) {
+        setError('Error al obtener los detalles del producto o las consultas.');
+        console.error('Error:', error); // Log del error
+      }
+    };
+  
+    fetchProductDetails();
   }, [id]);
+  
 
   const handleAddToCart = () => {
-    console.log(`Producto ${product.name} agregado al carrito`);
+    console.log(`Producto ${product.nombre} agregado al carrito`);
   };
 
-  const handlePostQuestion = () => {
+  const handlePostQuestion = async () => {
     if (newQuestion.trim()) {
-      setForum([...forum, { question: newQuestion, answer: null }]);
-      setNewQuestion('');
+      try {
+        const response = await api.post('/consultas', {
+          producto_id: product.id,
+          pregunta: newQuestion,
+        });
+
+        // Agregar la nueva pregunta al foro en el estado
+        setForum([...forum, { pregunta: newQuestion, respuesta: null }]);
+        setNewQuestion(''); // Limpiar la entrada de la nueva pregunta
+      } catch (error) {
+        console.error('Error al enviar la pregunta:', error);
+      }
     }
   };
 
   const handleAnswerQuestion = (index, answer) => {
     const updatedForum = [...forum];
-    updatedForum[index].answer = answer;
+    updatedForum[index].respuesta = answer;
     setForum(updatedForum);
   };
 
@@ -69,7 +76,7 @@ function DetalleProducto() {
         {/* Columna de la imagen */}
         <Col md={4}>
           <Card>
-            <Card.Img variant="top" src={product.image_url} />
+            <Card.Img variant="top" src={product.imagenes[0]} alt={product.nombre} />
           </Card>
         </Col>
 
@@ -77,18 +84,18 @@ function DetalleProducto() {
         <Col md={4}>
           <Card>
             <Card.Body>
-              <Card.Title>{product.name}</Card.Title>
+              <Card.Title>{product.nombre}</Card.Title>
               <Card.Text>
-                <strong>Condición:</strong> {product.condition}
+                <strong>Condición:</strong> {product.condicion}
               </Card.Text>
               <Card.Text>
-                <strong>Descripción:</strong> {product.description}
+                <strong>Descripción:</strong> {product.descripcion}
               </Card.Text>
               <Card.Text>
-                <strong>Precio:</strong> ${product.price}
+                <strong>Precio:</strong> {new Intl.NumberFormat('es-CL', { style: 'currency', currency: 'CLP' }).format(product.precio)}
               </Card.Text>
               <Card.Text>
-                <strong>Fecha de creación:</strong> {new Date(product.created_at).toLocaleDateString()}
+                <strong>Fecha de creación:</strong> {new Date(product.creado_en).toLocaleDateString()}
               </Card.Text>
             </Card.Body>
           </Card>
@@ -127,9 +134,9 @@ function DetalleProducto() {
           {forum.map((entry, index) => (
             <Card key={index} className="mb-3">
               <Card.Body>
-                <Card.Text><strong>Pregunta:</strong> {entry.question}</Card.Text>
-                {entry.answer ? (
-                  <Card.Text><strong>Respuesta:</strong> {entry.answer}</Card.Text>
+                <Card.Text><strong>Pregunta:</strong> {entry.pregunta}</Card.Text>
+                {entry.respuesta ? (
+                  <Card.Text><strong>Respuesta:</strong> {entry.respuesta}</Card.Text>
                 ) : (
                   <Form.Group controlId={`answer-${index}`}>
                     <Form.Control
@@ -150,3 +157,5 @@ function DetalleProducto() {
 }
 
 export default DetalleProducto;
+
+

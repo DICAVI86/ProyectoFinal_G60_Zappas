@@ -1,11 +1,23 @@
 import express from 'express';
-import { createProduct } from '../controllers/productController.js';
+import { getProductById, createProduct, getUserProducts, getProducts } from '../controllers/productController.js';
 import authenticateToken from '../middlewares/authenticateToken.js';
-import { upload } from '../middlewares/uploadMiddleware.js';
 
 const router = express.Router();
 
-// Ruta para crear un producto
-router.post('/create', authenticateToken, upload.array('images'), createProduct);
+// Crear un producto (requiere autenticación)
+router.post('/create', authenticateToken, createProduct);
+
+// Obtener todos los productos
+router.get('/', getProducts);
+
+// Obtener productos de un usuario específico (requiere autenticación)
+router.get('/user', authenticateToken, getUserProducts);
+
+// Obtener un producto por su ID
+router.get('/:id', getProductById);
+
 
 export default router;
+
+
+

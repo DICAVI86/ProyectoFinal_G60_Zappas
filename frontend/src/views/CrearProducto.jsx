@@ -1,55 +1,74 @@
 import React, { useState } from "react";
-import { Form, Button, Container, Row, Col } from "react-bootstrap";
-import api from '../services/api'; // Asegúrate de que esta ruta esté correcta
+import { Container, Form, Button, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import api from "../services/api";
 
 function CrearProducto() {
-  const [productData, setProductData] = useState({
-    nombre: "",
-    marca: "",
-    talla: "",
-    ano: "",
-    uso: "Nuevo",
-    precio: "",
-    categoria: "",
-  });
+  const [nombre, setNombre] = useState("");
+  const [marca, setMarca] = useState("");
+  const [talla, setTalla] = useState("");
+  const [ano, setAno] = useState("");
+  const [condicion, setCondicion] = useState("Nuevo");
+  const [precio, setPrecio] = useState("");
+  const [categoria, setCategoria] = useState("");
+  const [descripcion, setDescripcion] = useState("");
+  const [imagen, setImagen] = useState(""); // URL individual
+  const [imagenes, setImagenes] = useState([]); // Array de URLs
+  const navigate = useNavigate();
 
-  const [images, setImages] = useState([]);
-  const [previews, setPreviews] = useState([]);
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setProductData({ ...productData, [name]: value });
-  };
-
-  const handleImageUpload = (e) => {
-    const files = Array.from(e.target.files);
-    setImages(files);
-
-    // Generar previsualización
-    const previewUrls = files.map((file) => URL.createObjectURL(file));
-    setPreviews(previewUrls);
+  const agregarImagen = () => {
+    if (imagen.trim() !== "" && !imagenes.includes(imagen)) {
+      setImagenes([...imagenes, imagen]);
+      setImagen(""); // Limpiar el campo
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const formData = new FormData();
-    // Añadir los datos del producto
-    Object.keys(productData).forEach(key => formData.append(key, productData[key]));
-    
-    // Añadir las imágenes
-    images.forEach(image => formData.append('imagenes', image));  // Asegúrate de que el campo sea 'imagenes'
+    const producto = {
+      nombre,
+      marca,
+      talla,
+      ano,
+      condicion,
+      precio,
+      categoria,
+      descripcion,
+      imagenes,
+    };
+
+    const token = localStorage.getItem("token");
+    if (!token) {
+      console.error("Token no encontrado");
+      return;
+    }
+
+    const decodedToken = JSON.parse(atob(token.split(".")[1]));
+    const usuario_id = decodedToken.userId;
+
+    if (!usuario_id) {
+      console.error("No se encontró el usuario_id en el token");
+      return;
+    }
 
     try {
-      const response = await api.post('/products/create', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-          'Authorization': `Bearer ${localStorage.getItem('token')}`, // Agrega el token JWT en la cabecera
-        },
-      });      
-      console.log('Producto creado:', response.data);
+      const response = await api.post(
+        "/products/create",
+        { ...producto, usuario_id },
+        {
+          headers: {
+            "Authorization": `Bearer ${token}`,
+          },
+        }
+      );
+      console.log("Producto creado:", response.data);
+      navigate("/perfil");
     } catch (error) {
-      console.error('Error al crear producto:', error);
+      console.error(
+        "Error al crear producto:",
+        error.response ? error.response.data : error.message
+      );
     }
   };
 
@@ -57,105 +76,112 @@ function CrearProducto() {
     <Container className="my-5">
       <h1 className="mb-4">Agregar Producto</h1>
       <Form onSubmit={handleSubmit}>
-        <Form.Group className="mb-3" controlId="productName">
-          <Form.Label>Nombre Producto</Form.Label>
+        <Form.Group className="mb-3">
+          <Form.Label>Nombre</Form.Label>
           <Form.Control
             type="text"
-            placeholder="Ingresa el nombre del producto"
-            name="nombre"
-            value={productData.nombre}
-            onChange={handleInputChange}
+            value={nombre}
+            onChange={(e) => setNombre(e.target.value)}
             required
           />
         </Form.Group>
 
         <Row>
-          <Form.Group className="mb-3" controlId="productBrand" as={Col}>
-            <Form.Label>Marca</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Ingresa la marca del producto"
-              name="marca"
-              value={productData.marca}
-              onChange={handleInputChange}
-              required
-            />
-          </Form.Group>
-
-          <Form.Group className="mb-3" controlId="productSize" as={Col}>
-            <Form.Label>Talla</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Ingresa la talla"
-              name="talla"
-              value={productData.talla}
-              onChange={handleInputChange}
-              required
-            />
-          </Form.Group>
+          <Col>
+            <Form.Group className="mb-3">
+              <Form.Label>Marca</Form.Label>
+              <Form.Control
+                type="text"
+                value={marca}
+                onChange={(e) => setMarca(e.target.value)}
+                required
+              />
+            </Form.Group>
+          </Col>
+          <Col>
+            <Form.Group className="mb-3">
+              <Form.Label>Talla</Form.Label>
+              <Form.Control
+                type="text"
+                value={talla}
+                onChange={(e) => setTalla(e.target.value)}
+                required
+              />
+            </Form.Group>
+          </Col>
         </Row>
 
         <Row>
-          <Form.Group className="mb-3" controlId="productYear" as={Col}>
-            <Form.Label>Año</Form.Label>
-            <Form.Control
-              type="number"
-              placeholder="Ingresa el año"
-              name="ano" // Asegúrate de que coincida con el campo en productData
-              value={productData.ano}
-              onChange={handleInputChange}
-              required
-            />
-          </Form.Group>
-
-          <Form.Group className="mb-3" controlId="productCondition" as={Col}>
-            <Form.Label>Uso</Form.Label>
-            <Form.Select
-              name="uso"
-              value={productData.uso}
-              onChange={handleInputChange}
-            >
-              <option value="Nuevo">Nuevo</option>
-              <option value="Medio">Medio</option>
-              <option value="Bastante">Bastante</option>
-            </Form.Select>
-          </Form.Group>
+          <Col>
+            <Form.Group className="mb-3">
+              <Form.Label>Año</Form.Label>
+              <Form.Control
+                type="number"
+                value={ano}
+                onChange={(e) => setAno(e.target.value)}
+                required
+              />
+            </Form.Group>
+          </Col>
+          <Col>
+            <Form.Group className="mb-3">
+              <Form.Label>Condición</Form.Label>
+              <Form.Select
+                value={condicion}
+                onChange={(e) => setCondicion(e.target.value)}
+              >
+                <option value="Nuevo">Nuevo</option>
+                <option value="Medio">Medio</option>
+                <option value="Bastante">Bastante</option>
+              </Form.Select>
+            </Form.Group>
+          </Col>
         </Row>
 
-        <Form.Group className="mb-3" controlId="productPrice">
+        <Form.Group className="mb-3">
           <Form.Label>Precio</Form.Label>
           <Form.Control
             type="number"
-            placeholder="Ingresa el precio"
-            name="precio"
-            value={productData.precio}
-            onChange={handleInputChange}
+            value={precio}
+            onChange={(e) => setPrecio(e.target.value)}
             required
           />
         </Form.Group>
 
-        <Form.Group className="mb-3" controlId="productCategory">
+        <Form.Group className="mb-3">
           <Form.Label>Categoría</Form.Label>
           <Form.Control
             type="text"
-            placeholder="Ingresa la categoría"
-            name="categoria"
-            value={productData.categoria}
-            onChange={handleInputChange}
+            value={categoria}
+            onChange={(e) => setCategoria(e.target.value)}
             required
           />
         </Form.Group>
 
-        <Form.Group className="mb-3" controlId="productImages">
-          <Form.Label>Subir Imágenes</Form.Label>
+        <Form.Group className="mb-3">
+          <Form.Label>Descripción</Form.Label>
           <Form.Control
-            type="file"
-            accept="image/*"
-            multiple
-            onChange={handleImageUpload}
+            as="textarea"
+            rows={3}
+            value={descripcion}
+            onChange={(e) => setDescripcion(e.target.value)}
+            required
           />
+        </Form.Group>
+
+        <Form.Group className="mb-3">
+          <Form.Label>Agregar Imágenes (URLs)</Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="Ingresa la URL de la imagen"
+            value={imagen}
+            onChange={(e) => setImagen(e.target.value)}
+          />
+          <Button variant="secondary" onClick={agregarImagen} className="mt-2">
+            Agregar URL
+          </Button>
           <Row className="mt-3">
-            {previews.map((src, index) => (
+            {imagenes.map((src, index) => (
               <Col key={index} xs={3} className="mb-3">
                 <img
                   src={src}
@@ -176,3 +202,8 @@ function CrearProducto() {
 }
 
 export default CrearProducto;
+
+
+
+
+

@@ -1,4 +1,3 @@
-// services/api.js
 import axios from 'axios';
 
 // Configura la URL base de la API. Asegúrate de que el servidor Express esté corriendo en el puerto adecuado.
@@ -24,3 +23,4 @@ api.interceptors.request.use(
 );
 
 export default api;
+
