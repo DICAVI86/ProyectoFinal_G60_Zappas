@@ -6,30 +6,27 @@ import { useNavigate } from "react-router-dom";
 function CardZapa({ product }) {
   const { addToCart } = useCart();
   const { favoritos, addFavorito, removeFavorito } = useContext(FavoritosContext);
-  const navigate = useNavigate(); // Hook para navegación
+  const navigate = useNavigate();
 
-  // Estado inicial sincronizado con el contexto
   const [isFavorito, setIsFavorito] = useState(false);
 
-  // Sincronizar estado local con el contexto al montar el componente o cambiar los favoritos
   useEffect(() => {
     setIsFavorito(favoritos.some((fav) => fav.id === product.id));
   }, [favoritos, product.id]);
 
   const toggleFavorito = () => {
     if (isFavorito) {
-      removeFavorito(product.id); // Quitar de favoritos
+      removeFavorito(product.id);
     } else {
-      addFavorito(product); // Agregar a favoritos
+      addFavorito(product);
     }
-    setIsFavorito((prev) => !prev); // Actualizar el estado visual
+    setIsFavorito((prev) => !prev);
   };
 
   const handleViewDetail = () => {
-    navigate(`/detalle/${product.id}`, { state: { product } }); // Navega al detalle del producto con datos
+    navigate(`/detalle/${product.id}`, { state: { product } });
   };
 
-  // Función para formatear el precio en CLP
   const formatPrice = (price) => {
     return new Intl.NumberFormat('es-CL', {
       style: 'currency',
@@ -56,15 +53,25 @@ function CardZapa({ product }) {
         ♥
       </span>
 
-      <div className="card-body">
+      <div className="card-body text-center">
+        {/* Nombre del producto */}
         <h5 className="card-title">{product.nombre}</h5>
-        <p className="card-text">{product.descripcion}</p>
-        <p>
-          <strong>Precio:</strong> {formatPrice(product.precio)} {/* Formato CLP */}
-        </p>
-        <p>
+
+        {/* Condición del producto */}
+        <p className="card-text">
           <strong>Condición:</strong> {product.condicion}
         </p>
+
+        {/* Año del producto */}
+        <p className="card-text">
+          <strong>Año:</strong> {product.ano || "No especificado"}
+        </p>
+
+        {/* Precio del producto */}
+        <p className="card-text">
+          <strong>Precio:</strong> <span style={{ fontWeight: "bold" }}>{formatPrice(product.precio)}</span>
+        </p>
+
         <div className="d-flex justify-content-between align-items-center">
           <button className="btn btn-secondary m-1 custom-button" onClick={() => addToCart(product)}>
             Agregar al carrito
@@ -79,5 +86,3 @@ function CardZapa({ product }) {
 }
 
 export default CardZapa;
-
-
