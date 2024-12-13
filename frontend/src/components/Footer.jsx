@@ -6,7 +6,7 @@ function Footer() {
     <div className='footer'>
         <img src={logoPrimary} 
              alt="" 
-             style={{ width: "20%", height: "auto" }}/>
+             style={{ width: "10%", height: "auto" }}/>
     </div>
   )
 }

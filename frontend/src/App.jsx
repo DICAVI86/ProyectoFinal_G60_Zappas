@@ -22,23 +22,27 @@ function App() {
   return (
     
     <BrowserRouter>
-     <CartProvider>
-      <AuthProvider>
-      <FavoritosProvider>
-        <Navegador />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/iniciosesion" element={<InicioSesion />} />
-          <Route path="/perfil" element={<Perfil />} />
-          <Route path="/crearusuario" element={<CrearUsuario />} />
-          <Route path="/crearproducto" element={<CrearProducto />} />
-          <Route path="/detalle/:id" element={<DetalleProducto />} />
-          <Route path="/favoritos" element={<Favoritos />} />
-          <Route path="/carro" element={<Carro />} />
-        </Routes>
-        </FavoritosProvider>
-      </AuthProvider>
-        <Footer />
+      <CartProvider>
+        <AuthProvider>
+          <FavoritosProvider>
+            <div className="custom-body-bg">
+              <Navegador />
+              <main>
+                <Routes>
+                  <Route path="/" element={<Home />} />
+                  <Route path="/iniciosesion" element={<InicioSesion />} />
+                  <Route path="/perfil" element={<Perfil />} />
+                  <Route path="/crearusuario" element={<CrearUsuario />} />
+                  <Route path="/crearproducto" element={<CrearProducto />} />
+                  <Route path="/detalle/:id" element={<DetalleProducto />} />
+                  <Route path="/favoritos" element={<Favoritos />} />
+                  <Route path="/carro" element={<Carro />} />
+                </Routes>
+              </main>
+              <Footer />
+            </div>
+          </FavoritosProvider>
+        </AuthProvider>
       </CartProvider>
     </BrowserRouter>
 

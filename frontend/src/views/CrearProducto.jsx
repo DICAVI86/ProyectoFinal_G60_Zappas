@@ -132,8 +132,7 @@ function CrearProducto() {
                 onChange={(e) => setCondicion(e.target.value)}
               >
                 <option value="Nuevo">Nuevo</option>
-                <option value="Medio">Medio</option>
-                <option value="Bastante">Bastante</option>
+                <option value="Usado">Usado</option>
               </Form.Select>
             </Form.Group>
           </Col>
