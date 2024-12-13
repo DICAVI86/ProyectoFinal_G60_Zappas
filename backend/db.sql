@@ -18,6 +18,7 @@ CREATE TABLE usuarios (
     region VARCHAR(100) NOT NULL,          -- Región
     ciudad VARCHAR(100) NOT NULL,          -- Ciudad
     comuna VARCHAR(100) NOT NULL,          -- Comuna
+    foto_perfil VARCHAR(1000) DEFAULT NULL, -- Columna para la foto de perfil
     creado_en TIMESTAMP DEFAULT CURRENT_TIMESTAMP, -- Fecha de creación
     actualizado_en TIMESTAMP DEFAULT CURRENT_TIMESTAMP -- Fecha de última actualización
 );
@@ -52,10 +53,11 @@ CREATE TABLE consultas (
     usuario_id INT NOT NULL,              -- ID del usuario que hace la consulta
     producto_id INT NOT NULL,             -- ID del producto consultado
     pregunta TEXT NOT NULL,               -- Pregunta del usuario
-    respuesta TEXT,                       -- Respuesta del vendedor
+    respuesta TEXT,                       -- Respuesta del que consulta o el vendedor
     respondida BOOLEAN DEFAULT FALSE,     -- Estado de la consulta (respondida o no)
     creado_en TIMESTAMP DEFAULT CURRENT_TIMESTAMP,  -- Fecha de creación
     actualizado_en TIMESTAMP DEFAULT CURRENT_TIMESTAMP, -- Fecha de última actualización
+    respondido_por INT,                   -- ID del usuario que responde
     FOREIGN KEY (usuario_id) REFERENCES usuarios(id) ON DELETE CASCADE, -- Relación con usuarios
     FOREIGN KEY (producto_id) REFERENCES productos(id) ON DELETE CASCADE -- Relación con productos
 );

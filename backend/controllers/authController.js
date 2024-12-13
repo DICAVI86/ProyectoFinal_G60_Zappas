@@ -73,3 +73,51 @@ export const getUsers = async (req, res) => {
     res.status(500).json({ error: 'Error al obtener los usuarios.' });
   }
 };
+
+
+// Obtener los datos de mi perfil
+export const getProfile = async (req, res) => {
+  const userId = req.user.id;  // El ID del usuario autenticado, extraído del token
+
+  try {
+    const result = await pool.query(
+      'SELECT id, nombre, apellido, correo, direccion, region, ciudad, comuna, creado_en, foto_perfil FROM usuarios WHERE id = $1',
+      [userId]
+    );
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: 'Usuario no encontrado.' });
+    }
+
+    res.status(200).json(result.rows[0]); // Devolver los datos del usuario
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Error al obtener la información del usuario.' });
+  }
+};
+
+// Agregar foto de perfil
+export const updateProfilePic = async (req, res) => {
+  const { foto_perfil } = req.body; // Asumimos que el usuario enviará la URL
+  const userId = req.user.id;
+
+  if (!foto_perfil) {
+    return res.status(400).json({ error: 'Se requiere una URL para la foto de perfil.' });
+  }
+
+  try {
+    const result = await pool.query(
+      'UPDATE usuarios SET foto_perfil = $1 WHERE id = $2 RETURNING foto_perfil',
+      [foto_perfil, userId]
+    );
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: 'Usuario no encontrado.' });
+    }
+
+    res.status(200).json({ foto_perfil: result.rows[0].foto_perfil });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Hubo un problema al actualizar la foto de perfil.' });
+  }
+};

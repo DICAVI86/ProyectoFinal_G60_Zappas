@@ -15,8 +15,6 @@ import Carro from "./views/Carro";
 import Navegador from './components/Navegador';
 import Footer from './components/Footer';
 
-
-
 function App() {
 
   return (
