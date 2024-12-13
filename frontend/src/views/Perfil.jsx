@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Card, Button, Alert } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import api from "../services/api";
+import api from "../services/api";  // Asegúrate de que esta ruta esté correcta
 
 function Perfil() {
   const [userProducts, setUserProducts] = useState([]); // Inicializa como array vacío
@@ -9,10 +9,10 @@ function Perfil() {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
-  // Función para obtener productos
+  // Función para obtener productos del usuario autenticado
   const fetchUserProducts = async () => {
     try {
-      const response = await api.get("/products", {  
+      const response = await api.get("/products/user", {  // Cambié la URL aquí
         headers: {
           "Cache-Control": "no-cache",
         },
@@ -31,12 +31,9 @@ function Perfil() {
     }
   };
   
-  
-  
-
   useEffect(() => {
-    fetchUserProducts();
-  }, []);
+    fetchUserProducts(); // Llamamos a la función al cargar el componente
+  }, []); // Solo se ejecuta una vez cuando se carga el componente
 
   const handleAddProduct = () => {
     navigate("/crearproducto");
@@ -106,6 +103,3 @@ function Perfil() {
 }
 
 export default Perfil;
-
-
-

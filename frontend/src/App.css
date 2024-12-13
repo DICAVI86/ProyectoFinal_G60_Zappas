@@ -1,94 +1,100 @@
 html,
 body {
-    height: 100%;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
+  height: 100%;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  background-color: #F2EBDC;
 }
 
 ul {
-    list-style-type: none;
+  list-style-type: none;
 }
 
 #root {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: inherit;
 }
 
 main {
-    flex: 1;
-}
-
-h1 {
-    color: #3EF238 !important;
-}
-
-.custom-body-bg {
-    background-color: #F2EBDC;
-    min-height: 100vh;
-    flex-direction: column;
-}
-
-.custom-card-item-cart {
-    border: solid;
-    display: flex;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 .footer {
-    height: auto;
-    background-color: #5944A6;
-    display: flex;
-    justify-content: end;
+  background-color: #5944A6;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  margin-top: auto;
+}
+
+
+h1 {
+  color: #3EF238 !important;
+}
+
+.custom-body-bg {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #F2EBDC;
+}
+
+
+.custom-card-item-cart {
+  border: solid;
+  display: flex;
 }
 
 .heart-icon {
-    font-size: 24px;
-    color: grey;
-    cursor: pointer;
-    user-select: none;
-    transition: color 0.3s ease;
-  }
-  
+  font-size: 24px;
+  color: grey;
+  cursor: pointer;
+  user-select: none;
+  transition: color 0.3s ease;
+}
+
 .heart-icon.active {
-    color: red;
-  }
+  color: red;
+}
 
-  .remove-button {
-    position: absolute;
-    top: 5px;
-    right: 5px;
-    background: none;
-    border: none;
-    color: red;
-    font-size: 20px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: color 0.3s ease;
-  }
-  
-  .remove-button:hover {
-    color: darkred;
-  }
+.remove-button {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background: none;
+  border: none;
+  color: red;
+  font-size: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
 
-  .custom-navbar {
-    background-color: #5944A6; /* Color de fondo proporcionado */
-    color: white !important;
-  }
-  
-  .nav-link-hover {
-    color: white;
-    transition: color 0.3s ease;
-  }
-  
-  .nav-link-hover:hover {
-    color: #f2ebdc; /* Color para el hover */
-  }
-  
-  .badge {
-    font-size: 0.9rem;
-    padding: 0.3rem 0.6rem;
-  }
-  
-  
-  
+.remove-button:hover {
+  color: darkred;
+}
+
+.custom-navbar {
+  background-color: #5944A6;
+  color: white !important;
+}
+
+.nav-link-hover {
+  color: white;
+  transition: color 0.3s ease;
+}
+
+.nav-link-hover:hover {
+  color: #f2ebdc;
+}
+
+.badge {
+  font-size: 0.9rem;
+  padding: 0.3rem 0.6rem;
+}
