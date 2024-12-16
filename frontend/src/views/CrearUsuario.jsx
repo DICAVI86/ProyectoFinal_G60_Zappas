@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {Button, Container} from 'react-bootstrap';
+import { Button, Container } from 'react-bootstrap';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
@@ -46,7 +46,6 @@ function CrearUsuario() {
       return;
     }
 
-
     try {
       const response = await api.post('/users/register', {
         nombre,
@@ -66,7 +65,12 @@ function CrearUsuario() {
       }
     } catch (error) {
       console.error(error);
-      setError('Hubo un error al crear el usuario. Intenta nuevamente.');
+      // Verificar si el error es por el correo ya existente
+      if (error.response && error.response.status === 400 && error.response.data.error === 'El usuario con este correo ya existe.') {
+        setError('El correo electrónico ya está registrado.');
+      } else {
+        setError('Hubo un error al crear el usuario. Intenta nuevamente.');
+      }
     }
   };
 
@@ -192,5 +196,3 @@ function CrearUsuario() {
 }
 
 export default CrearUsuario;
-
-
