@@ -2,10 +2,12 @@ import React, { useState, useEffect, useContext } from "react";
 import { useCart } from "../context/cartContext";
 import { FavoritosContext } from "../context/favoritosContext";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/authContext"; // Importamos el contexto de autenticación
 
 function CardZapa({ product }) {
   const { addToCart } = useCart();
   const { favoritos, addFavorito, removeFavorito } = useContext(FavoritosContext);
+  const { isLoggedIn } = useAuth(); // Obtenemos el estado de autenticación
   const navigate = useNavigate();
 
   const [isFavorito, setIsFavorito] = useState(false);
@@ -25,6 +27,14 @@ function CardZapa({ product }) {
 
   const handleViewDetail = () => {
     navigate(`/detalle/${product.id}`, { state: { product } });
+  };
+
+  const handleAddToCart = () => {
+    if (isLoggedIn) {
+      addToCart(product);
+    } else {
+      alert("Necesitas estar logueado para agregar al carrito");
+    }
   };
 
   const formatPrice = (price) => {
@@ -72,8 +82,9 @@ function CardZapa({ product }) {
           <strong>Precio:</strong> <span style={{ fontWeight: "bold" }}>{formatPrice(product.precio)}</span>
         </p>
 
+        {/* Botones */}
         <div className="d-flex justify-content-between align-items-center">
-          <button className="btn btn-secondary m-1 custom-button" onClick={() => addToCart(product)}>
+          <button className="btn btn-secondary m-1 custom-button" onClick={handleAddToCart}>
             Agregar al carrito
           </button>
           <button className="btn btn-primary m-1 custom-button" onClick={handleViewDetail}>

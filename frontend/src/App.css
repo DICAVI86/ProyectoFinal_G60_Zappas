@@ -145,19 +145,29 @@ button:hover {
 .profile-picture {
   position: relative;
   display: inline-block;
+  margin-bottom: 20px; 
 }
 
 .profile-picture img {
-  position: absolute; /* La imagen se sobrepondrá */
-  top: -40px; /* Mueve la imagen hacia arriba */
-  left: 50%;
-  transform: translateX(-50%); /* Centra la imagen */
-  width: 150px;  /* Tamaño ajustado */
+  width: 150px; 
   height: 150px;
   object-fit: cover;
-  border: 5px solid white; /* Borde blanco para un buen contraste */
+  border: 5px solid white; 
+  cursor: pointer; 
 }
 
 .profile-info {
-  margin-top: 110px; /* Ajusta el espacio debajo de la imagen para no tapar el contenido */
+  background-color: #f8f9fa;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-top: 20px; 
+}
+
+.profile-info .form-group {
+  margin-top: 10px; 
+}
+
+.profile-info .form-control {
+  margin-top: 10px; 
 }

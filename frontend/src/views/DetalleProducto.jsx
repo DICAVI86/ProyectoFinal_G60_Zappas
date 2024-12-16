@@ -4,12 +4,14 @@ import { Container, Row, Col, Button, Form, Card } from 'react-bootstrap';
 import api from '../services/api';
 import { useCart } from '../context/cartContext';
 import { FavoritosContext } from '../context/favoritosContext';
+import { useAuth } from '../context/authContext'; // Importamos el contexto de autenticación
 
 function DetalleProducto() {
   const { id } = useParams();
   const navigate = useNavigate();
   const { addToCart } = useCart();
   const { favoritos, addFavorito, removeFavorito } = useContext(FavoritosContext);
+  const { isLoggedIn } = useAuth(); // Obtenemos el estado de autenticación
 
   const [product, setProduct] = useState(null);
   const [error, setError] = useState(null);
@@ -40,7 +42,11 @@ function DetalleProducto() {
   }, [id, favoritos]);
 
   const handleAddToCart = () => {
-    addToCart(product);
+    if (isLoggedIn) {
+      addToCart(product);
+    } else {
+      alert("Necesitas estar logueado para agregar al carrito");
+    }
   };
 
   const toggleFavorito = () => {
