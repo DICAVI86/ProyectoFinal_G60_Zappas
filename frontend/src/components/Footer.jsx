@@ -36,7 +36,7 @@ function Footer() {
 
 const styles = {
   footer: {
-    backgroundColor: '#222',
+    backgroundColor: '#5944A6',
     color: '#fff',
     padding: '10px 20px',
     textAlign: 'center',
