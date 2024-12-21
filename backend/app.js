@@ -11,7 +11,7 @@ const app = express();
 app.use(morgan('dev'));
 app.use(express.json());
 const corsOptions = {
-  origin: 'http://localhost:5173', // Permite solicitudes solo desde este origen
+  origin: 'https://tu-dominio-en-render.com', // Actualiza con el dominio de tu frontend en producción
 };
 app.use(cors(corsOptions));
 

@@ -6,5 +6,7 @@ dotenv.config();
 export const config = {
   port: process.env.PORT || 3000,
   jwtSecret: process.env.JWT_SECRET || 'mi-secreto-para-jwt',
-  databaseUrl: process.env.DATABASE_URL || 'postgres://usuario:contraseña@localhost:5432/myapp',
+  databaseUrl: process.env.DATABASE_URL, // Usamos DATABASE_URL para Render
 };
+
+
