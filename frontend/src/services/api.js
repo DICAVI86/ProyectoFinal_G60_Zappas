@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // Configura la URL base de la API. Asegúrate de que el servidor Express esté corriendo en el puerto adecuado.
 const api = axios.create({
-  baseURL: 'http://localhost:3000/api', // Cambia esta URL según sea necesario
+  baseURL: 'https://proyectofinal-g60-zappas.onrender.com/api', // Cambia esta URL según sea necesario
   headers: {
     'Content-Type': 'application/json',
   },
